@@ -2,6 +2,9 @@ FROM php:7.3-fpm-alpine
 
 LABEL maintainer="Ngọc Nguyễn <me@ngocnh.info>"
 
+EXPOSE 9000
+WORKDIR /var/www
+
 RUN apk --update add --no-cache --virtual build-dependencies \
       build-base openssl-dev autoconf freetype icu make libpng libjpeg-turbo freetype-dev \
       libmemcached-dev libpng-dev libjpeg-turbo-dev libmcrypt-dev zlib-dev libzip-dev icu-dev g++ \
@@ -54,7 +57,5 @@ RUN NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
 #RUN chmod a+x /usr/local/bin/php-cs-fixer
 
 RUN apk del build-dependencies && rm -rf /var/cache/apk/*
-
-EXPOSE 9000
 
 CMD ["php-fpm"]
